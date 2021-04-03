@@ -1,56 +1,43 @@
-from nodo import Nodo
-
-class Lista(Nodo):
+#Clase Funcional
+class Lista:
     def __init__(self):
-        super().__init__()
-        self.cabeza = Nodo()
-        self.contador = 0
-        self.valor = self.__str__()
-        self.frecuencia = 1
-        self.indice_frecuencia = None
-        
-    def agregar(self, nuevo_nodo):
-        nodo = self.cabeza
-        while(nodo.siguiente):
-            nodo = nodo.siguiente
-        nodo.siguiente = nuevo_nodo
-        self.contador += 1
-        self.valor = self.__str__()
-        
-    def get(self, i):
-        if (i >= self.contador):
-            return None
-        nodo = self.cabeza.siguiente
-        n = 0
-        while(nodo):
-            if (n == i):
-                return nodo
-            nodo = nodo.siguiente
-            n += 1
+        self.cant = 0
+        self.inicio = None       
+    
+    def insertar(self, nuevo):        
+        if self.inicio is None:
+            self.inicio = nuevo
+            self.inicio.siguiente = self.inicio
+            self.cant +=1
+        else:
+            if self.inicio.siguiente == self.inicio:
+                self.inicio.siguiente = nuevo
+                nuevo.siguiente = self.inicio
+                self.cant +=1
+            else:
+                temporal = self.inicio            
+                while temporal.siguiente != self.inicio:
+                    temporal = temporal.siguiente
+                temporal.siguiente = nuevo
+                nuevo.siguiente = self.inicio
+                self.cant +=1
+    
+    def Get_Objet(self, indice):
+        temporal = self.inicio
+        contador = 1
+        while contador < indice:
+            contador+=1
+            temporal = temporal.siguiente
+        return temporal
 
-    def __getitem__(self, i):
-        return self.get(i)
-
-    def length(self):
-        return self.contador
-
-    def __str__(self):
-        resultado = "["
-        for i in range(self.length()):
-            nodo = self.get(i)
-            if (i == self.length()-1):
-                resultado += '{}'.format(nodo.valor)
-                break
-            resultado += '{}, '.format(nodo.valor)
-        resultado += "]"
-        return resultado
-   
-    def mostrarValores(self):
+    def Get_Names(self):
+        tmp = self.inicio
+        size = 0
         resultado = ''
-        for i in range(self.length()):
-            nodo = self.get(i)
-            if(i == self.length()-1):
-                resultado += f'{nodo.valor}'
-                break
-            resultado += f'{nodo.valor} '
+        spacio = '\n'
+        for i in range(int(self.cant)):
+            if tmp.nombre !=None:
+                resultado += f'{tmp.nombre}'
+            tmp=tmp.siguiente
+            resultado += f'{ spacio }'
         return resultado
