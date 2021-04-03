@@ -174,10 +174,11 @@ bot_operaciones.grid(row=0, column=1, padx=50, pady=5)
 bot_reportes.grid(row=0, column=2, padx=50, pady=5)
 bot_ayuda.grid(row=0, column=3, padx=50, pady=5)
  """
- 
+
 #Insertando labels
 la_titulo_1.grid(row=0, column=0, padx=5, pady=5)
 la_titulo_2.grid(row=0, column=1, padx=5, pady=5)
 
 
 ventana.mainloop()
+#Rama features
