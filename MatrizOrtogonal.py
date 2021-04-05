@@ -52,13 +52,16 @@ class HeaderList(object):
     
 
 class Matriz(object):
+    
     def __init__(self, nombre, filas, columnas):
-        self.nombre = nombre
-        self.filas = filas
-        self.columnas = columnas
+        
         self.encabezadoFilas = HeaderList()
         self.encabezadoColumnas = HeaderList()
         self.siguiente = None
+        self.nombre = nombre
+        self.filas = filas
+        self.columnas = columnas
+
 
     def insertar(self, dato, fila, columna):
         nuevo = Nodo(dato,fila,columna)

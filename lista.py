@@ -22,10 +22,10 @@ class Lista:
                 nuevo.siguiente = self.inicio
                 self.cant +=1
     
-    def Get_Objet(self, indice):
+    def get(self, index):
         temporal = self.inicio
         contador = 1
-        while contador < indice:
+        while contador < index:
             contador+=1
             temporal = temporal.siguiente
         return temporal
