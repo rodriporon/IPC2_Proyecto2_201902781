@@ -433,16 +433,6 @@ def operacionesMatriz2():
     ventana_2.title('Operaciones 2 imagenes')
     ventana_2.state('zoomed')
 
-    menubar = Menu(ventana_2)
-    ventana_2.config(menu=menubar)
-
-    operaciones = Menu(menubar, tearoff=0)
-    operaciones.add_command(label='Rotación Horizontal',command=lambda:operacionesMatriz(combo.get(),1))
-    operaciones.add_command(label='Rotación Vertical',command=lambda:operacionesMatriz(combo.get(),2))
-    operaciones.add_command(label='Traspuesta de una imagen',command=lambda:operacionesMatriz(combo.get(),3))
-    operaciones.add_command(label='Limpiar zona',command=lambda:operacionesMatriz(combo.get(),4)) 
-
-    menubar.add_cascade(label='Operaciones', menu=operaciones)
 
     frame_combo = Frame(ventana_2, bd=5, relief='raised', bg="#757de8")
     frame_combo.pack()
@@ -592,6 +582,7 @@ def operacionesMatrices(matriz_1, matriz_2, opcion):
     	    matriz2_operar = lista_matrices.get(i+1)
     if opcion == 0:
         nuevaVentanaDosMatrices(matriz1_operar, matriz2_operar)
+        datos_reporte_cargarmatriz1.agregar(nodoLista(f'{datetime.now()} - Matriz 1: {matriz_1} - Espacios llenos : {get_llenos(matriz1_operar)} - Espacios vacíos: {get_vacios(matriz1_operar)} | - Matriz 2: {matriz_2} - Espacios llenos : {get_llenos(matriz2_operar)} - Espacios vacíos: {get_vacios(matriz2_operar)}'))
 
 def get_x(matriz):
 	return int(matriz.filas)
