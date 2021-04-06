@@ -11,6 +11,7 @@ from NodoLista import nodoLista
 from datetime import date
 from datetime import datetime
 import webbrowser
+import os
 
 now = datetime.now()
 
@@ -672,6 +673,32 @@ def crearReporte():
     f.close()
     webbrowser.open_new_tab('Reporte.html')
 
+def datosEstudiante():
+    f = open('DatosEstudiante.html', 'w', encoding='utf-8')
+    f.write('<!DOCTYPE html>\n')
+    f.write('<html lang="es">\n')
+    f.write('<head>\n')
+    f.write('<meta charset="utf-8">\n')
+    f.write('<title>Datos del estudiante</title>\n')
+    f.write('<meta name="theme-color" content="#3c790a">\n')
+    f.write('</head>\n')
+    f.write('<body>\n')
+    f.write('<div class="container">\n')
+    f.write('<article>\n')
+    f.write('<h4><center>Nombre: Rodrigo Antonio Porón De León</h4></center>\n')
+    f.write('<h4><center>Carné: 201902781</h4></center>\n')
+    f.write('<h4><center>Curso: Introducción a la programación y computación 2</h4></center>\n')
+    f.write('</article>\n')
+    f.write('</div>\n')
+    f.write('</body>\n')
+    f.write('</html>>\n')
+    f.close()
+    webbrowser.open_new_tab('DatosEstudiante.html')
+
+def abrirDocumentacion():
+    ruta = "Ensayo-Proyecto-2.pdf"
+    os.popen(ruta)
+
 #Creando el menú superior
 menubar = Menu(ventana)
 ventana.config(menu=menubar)
@@ -697,6 +724,8 @@ reportes = Menu(menubar, tearoff=0)
 reportes.add_command(label='Crear Reporte', command=crearReporte)
 
 ayuda = Menu(menubar, tearoff=0)
+ayuda.add_command(label='Datos del estudiante', command=datosEstudiante)
+ayuda.add_command(label='Ver documentación', command=abrirDocumentacion)
 
 menubar.add_cascade(label='Cargar Archivo', menu=cargararchivo)
 menubar.add_cascade(label='Operaciones 1 imagen', menu=operaciones)
