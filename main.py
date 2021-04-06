@@ -5,11 +5,19 @@ from xml.dom import minidom
 from tkinter.filedialog import askopenfilename
 from nodo import Nodo
 from lista import Lista 
-from matrizOrtogonal import Matriz
+from MatrizOrtogonal import Matriz
+from ListaSimple import listaSimple
+from NodoLista import nodoLista
+from datetime import date
+from datetime import datetime
+import webbrowser
+
+now = datetime.now()
 
 global nombre_matrices, imagen_matrices, lista_matrices, imagen_mostrar
 imagen_mostrar = ''
 
+datos_reporte_cargarmatriz1 = listaSimple()
 lista_matrices = Lista()
 
 ventana = Tk()
@@ -68,7 +76,7 @@ def rotacionHorizontal(matriz):
                 nodo.config(justify = 'center', fg = 'white', bg='#757de8')
                 nodo.insert(0,'*')
                 
-
+    datos_reporte_cargarmatriz1.agregar(nodoLista(f'{datetime.now()} - Rotación Horizontal- Matriz: {matriz.nombre}'))
 def rotacionVertical(matriz):
 
     for i in range(int(get_x(matriz))):
@@ -79,7 +87,7 @@ def rotacionVertical(matriz):
                 nodo.config(justify = 'center', fg = 'white', bg='#757de8')
                 nodo.insert(0,'*')
                 
-
+    datos_reporte_cargarmatriz1.agregar(nodoLista(f'{datetime.now()} - Rotación Vertical- Matriz: {matriz.nombre}'))
 def traspuesta(matriz):
 
     for i in range(int(get_x(matriz))):
@@ -88,7 +96,8 @@ def traspuesta(matriz):
             nodo.grid(padx = 2, pady = 2, row = j, column = i, columnspan = 1)
             if matriz.get(i+1, j+1):
                 nodo.config(justify = 'center', fg = 'white', bg='#757de8')
-                nodo.insert(0,'*')     
+                nodo.insert(0,'*')    
+    datos_reporte_cargarmatriz1.agregar(nodoLista(f'{datetime.now()} - Traspuesta- Matriz: {matriz.nombre}')) 
 
 def nuevaVentanaLimpiarArea(matriz):
     ventanaLimpiar = Toplevel(ventana)
@@ -115,7 +124,7 @@ def nuevaVentanaLimpiarArea(matriz):
     bot_limpiar_area = Button(ventanaLimpiar, text='Limpiar área', command=lambda:limpiarArea(int(desde_fila.get()), int(desde_columna.get()), int(hasta_fila.get()), int(hasta_columna.get()), combo.get()))
     bot_limpiar_area.place(x=260, y=260)
 
-
+    
 
 def limpiarArea(desde_fila, desde_columna, hasta_fila, hasta_columna, nombre_matriz):
     for i in range(lista_matrices.cant):
@@ -130,23 +139,7 @@ def limpiarArea(desde_fila, desde_columna, hasta_fila, hasta_columna, nombre_mat
             if matriz_operar.get(i+1, j+1):
                 nodo.insert(0,'*')
                 nodo.config(justify = 'center', fg = 'white', bg='#757de8')
-                if (i == (desde_fila-1)) and (j >= (desde_columna-1)) and (j <= (hasta_columna-1)):
-                    nodo.configure({'background': "yellow"})
-                if (i == (hasta_fila-1)) and (j >= (desde_columna-1)) and (j <= (hasta_columna-1)):
-                    nodo.configure({'background': "yellow"})
-                if (i == (desde_fila-1)) and (j >= (hasta_fila-1)) and (j <= (hasta_columna-1)):
-                    nodo.configure({'background': "yellow"})
-                if (i == (desde_fila-1)) and (j >= (hasta_fila-1)) and (j == (hasta_columna-1)):
-                    nodo.configure({'background': "yellow"})
-            if (i == (desde_fila-1)) and (j >= (desde_columna-1)) and (j <= (hasta_columna-1)):
-                    nodo.configure({'background': "yellow"})
-            if (i == (hasta_fila-1)) and (j >= (desde_columna-1)) and (j <= (hasta_columna-1)):
-                    nodo.configure({'background': "yellow"})
-            if (i == (desde_fila-1)) and (j >= (hasta_fila-1)) and (j <= (hasta_columna-1)):
-                    nodo.configure({'background': "yellow"})
-            if (i == (desde_fila-1)) and (j >= (hasta_fila-1)) and (j == (hasta_columna-1)):
-                    nodo.configure({'background': "yellow"})
-
+                
 def nuevaVentanaLineaHorizontal():
     
     ventanaLineaHorizontal = Toplevel(ventana)
@@ -280,6 +273,7 @@ def dibujarTriangulo(fila, columna, dimension, nombre_matriz):
                 nodo.configure({'background': "#6ec6ff"})
                 aux_columna += 1
                 aux_fila += 1
+    datos_reporte_cargarmatriz1.agregar(nodoLista(f'{datetime.now()} - Dibujar Triángulo- Matriz: {nombre_matriz}'))
 
 def dibujarRectangulo(fila, columna, ancho, largo, nombre_matriz):
     paso = False
@@ -327,6 +321,7 @@ def dibujarRectangulo(fila, columna, ancho, largo, nombre_matriz):
                     paso = True
                 nodo.config(justify = 'center', fg = 'black')
                 nodo.configure({'background': "#6ec6ff"})
+    datos_reporte_cargarmatriz1.agregar(nodoLista(f'{datetime.now()} - Dibujar Rectángulo- Matriz: {nombre_matriz}'))
 
 def lineaHorizontal(fila, columna, cantidad_elementos, nombre_matriz):
     for i in range(lista_matrices.cant):
@@ -356,7 +351,7 @@ def lineaHorizontal(fila, columna, cantidad_elementos, nombre_matriz):
                     nodo.insert(0,'*')
                 nodo.configure({'background': "#6ec6ff"})
                 nodo.config(justify = 'center', fg = 'black')
-
+    datos_reporte_cargarmatriz1.agregar(nodoLista(f'{datetime.now()} - Linea Horizontal - Matriz: {nombre_matriz}'))
 def lineaVertical(fila, columna, cantidad_elementos, nombre_matriz):
     for i in range(lista_matrices.cant):
         if nombre_matriz == lista_matrices.get(i+1).nombre:
@@ -385,7 +380,7 @@ def lineaVertical(fila, columna, cantidad_elementos, nombre_matriz):
                     nodo.insert(0,'*')
                 nodo.configure({'background': "#6ec6ff"})
                 nodo.config(justify = 'center', fg = 'black')
-    
+    datos_reporte_cargarmatriz1.agregar(nodoLista(f'{datetime.now()} - Linea Vertical - Matriz: {nombre_matriz}'))
 
 def crearPanel():
 
@@ -401,6 +396,7 @@ def clean():
     for child in panelResultado.winfo_children():
         child.destroy()
 
+log_nombre_matrices = listaSimple()
 
 def operacionesMatriz(nombre_matriz, opcion):
     imagen = ''
@@ -410,6 +406,7 @@ def operacionesMatriz(nombre_matriz, opcion):
     		matriz_operar = lista_matrices.get(i+1)
     if opcion == 0:
         imagenOriginal(matriz_operar)
+        
     elif opcion == 1:
         rotacionHorizontal(matriz_operar)
     elif opcion == 2:
@@ -497,7 +494,7 @@ def nuevaVentanaResultMatrices(matriz_1, matriz_2, matriz_mayor_dim, opcion):
                 if matriz_1.get(i+1, j+1) or matriz_2.get(i+1, j+1):
                     nodo.insert(0,'*')
                     nodo.config(justify = 'center', fg = 'white', bg='#757de8')
-
+    datos_reporte_cargarmatriz1.agregar(nodoLista(f'{datetime.now()} - Unión A,B - Matriz 1: {matriz_1.nombre} | Matriz 2: {matriz_2.nombre}'))
     if opcion == 2:
         for i in range(int(pos_x)): 
             for j in range(int(pos_y)):
@@ -506,7 +503,7 @@ def nuevaVentanaResultMatrices(matriz_1, matriz_2, matriz_mayor_dim, opcion):
                 if matriz_1.get(i+1, j+1) and matriz_2.get(i+1, j+1):
                     nodo.insert(0,'*')
                     nodo.config(justify = 'center', fg = 'white', bg='#757de8')
-
+    datos_reporte_cargarmatriz1.agregar(nodoLista(f'{datetime.now()} - Intersección - Matriz 1: {matriz_1.nombre} | Matriz 2: {matriz_2.nombre}'))
     if opcion == 3:
         for i in range(int(pos_x)): 
             for j in range(int(pos_y)):
@@ -515,7 +512,7 @@ def nuevaVentanaResultMatrices(matriz_1, matriz_2, matriz_mayor_dim, opcion):
                 if matriz_1.get(i+1, j+1) and not matriz_2.get(i+1, j+1):
                     nodo.insert(0,'*')
                     nodo.config(justify = 'center', fg = 'white', bg='#757de8')
-
+    datos_reporte_cargarmatriz1.agregar(nodoLista(f'{datetime.now()} - Diferencia A,B - Matriz 1: {matriz_1.nombre} | Matriz 2: {matriz_2.nombre}'))
     if opcion == 4:
         for i in range(int(pos_x)): 
             for j in range(int(pos_y)):
@@ -524,7 +521,7 @@ def nuevaVentanaResultMatrices(matriz_1, matriz_2, matriz_mayor_dim, opcion):
                 if (matriz_1.get(i+1, j+1) and not matriz_2.get(i+1, j+1)) or (not matriz_1.get(i+1, j+1) and matriz_2.get(i+1, j+1)):
                     nodo.insert(0,'*')
                     nodo.config(justify = 'center', fg = 'white', bg='#757de8')
-
+    datos_reporte_cargarmatriz1.agregar(nodoLista(f'{datetime.now()} - Diferencia Simétrica - Matriz 1: {matriz_1.nombre} | Matriz 2: {matriz_2.nombre}'))
 def nuevaVentanaDosMatrices(matriz_1, matriz_2):
     ventana_dos_matrices = Toplevel(ventana)
     ventana_dos_matrices.title('Operaciones 2 imagenes')
@@ -602,6 +599,27 @@ def get_x(matriz):
 def get_y(matriz):
 	return int(matriz.columnas)
 
+def get_llenos(matriz):
+    pos_x = get_x(matriz)
+    pos_y = get_y(matriz)
+    lleno = 0
+    for i in range(int(pos_x)): 
+        for j in range(int(pos_y)):
+            if matriz.get(i+1, j+1):
+                lleno += 1
+    return lleno   
+
+def get_vacios(matriz):
+    pos_x = get_x(matriz)
+    pos_y = get_y(matriz)
+    vacio = 0
+    for i in range(int(pos_x)): 
+        for j in range(int(pos_y)):
+            if not matriz.get(i+1, j+1):
+                vacio += 1
+    return vacio
+
+
 def imagenOriginal(matriz):
     pos_x = get_x(matriz)
     pos_y = get_y(matriz)
@@ -613,7 +631,8 @@ def imagenOriginal(matriz):
             if matriz.get(i+1, j+1):
                 nodo.insert(0,'*')
                 nodo.config(justify = 'center', fg = 'white', bg='#757de8')
-                
+
+    datos_reporte_cargarmatriz1.agregar(nodoLista(f'{datetime.now()} - {matriz.nombre} - Espacios llenos: {get_llenos(matriz)} - Espacios vacíos: {get_vacios(matriz)}'))
 
 def imagenesOriginales(matriz_1, matriz_2):
     pos_x1 = get_x(matriz_1)
@@ -640,8 +659,28 @@ def imagenesOriginales(matriz_1, matriz_2):
                 nodo.insert(0,'*')
                 nodo.config(justify = 'center', fg = 'white', bg='#757de8')
 
-def reportes():
-    pass
+def crearReporte():
+
+    f = open('Reporte.html', 'w', encoding='utf-8')
+    f.write('<!DOCTYPE html>\n')
+    f.write('<html lang="es">\n')
+    f.write('<head>\n')
+    f.write('<meta charset="utf-8">\n')
+    f.write('<title>Reporte</title>\n')
+    f.write('<meta name="theme-color" content="#3c790a">\n')
+    f.write('</head>\n')
+    f.write('<body>\n')
+    f.write('<div class="container">\n')
+    f.write('<article>\n')
+    for i in range(datos_reporte_cargarmatriz1.length()):
+        f.write(f'<h4><center>{datos_reporte_cargarmatriz1[i]}</h4></center>\n')
+    f.write('</article>\n')
+    f.write('</div>\n')
+    f.write('</body>\n')
+    f.write('</html>>\n')
+    f.close()
+    webbrowser.open_new_tab('Reporte.html')
+
 #Creando el menú superior
 menubar = Menu(ventana)
 ventana.config(menu=menubar)
@@ -664,6 +703,8 @@ operaciones_2 = Menu(menubar, tearoff=0)
 operaciones_2.add_command(label='Operaciones con 2 imagenes',command=operacionesMatriz2)
 
 reportes = Menu(menubar, tearoff=0)
+reportes.add_command(label='Crear Reporte', command=crearReporte)
+
 ayuda = Menu(menubar, tearoff=0)
 
 menubar.add_cascade(label='Cargar Archivo', menu=cargararchivo)
